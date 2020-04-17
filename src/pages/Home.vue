@@ -32,7 +32,12 @@
                 <!-- 图标 -->
                 <div class="icons-wrapper">
                     <div>
-                        <span class="icon-item"><i class="iconfont icon-shiyongxuzhi"></i><p>入馆须知</p></span>
+                        <span class="icon-item">
+                            <router-link :to="'/Static'">
+                                <i class="iconfont icon-shiyongxuzhi"></i>
+                                <p>入馆须知</p>
+                            </router-link>
+                        </span>
                         <span class="icon-item"><i class="iconfont icon-yemiantuiguang"></i><p>阅读推广</p></span>
                         <span class="icon-item"><i class="iconfont icon-shijian"></i><p>开馆时间</p></span>
                         <span class="icon-item"><i class="iconfont icon-wiappfangwenliang"></i><p>校外访问</p></span>
@@ -157,10 +162,13 @@ export default {
                         cursor pointer;
                         display inline-block;
                         padding 10px 0;
-                        >i
+                        .iconfont
                             font-size 50px;
                         >p
                             font-size 16px;
+                        >a
+                            text-decoration none;
+                            color black;
             .new-books
                 flex 4;
                 text-align center;
