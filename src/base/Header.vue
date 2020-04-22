@@ -2,7 +2,7 @@
   <div id="nav-bar">
     <ul>
       <router-link :to="'/'" tag="li">首页</router-link>
-        <router-link to tag="li"  v-for="(list, id) in headerList" :key="id">{{list.menuName}}</router-link>
+      <router-link  tag="li" v-for="(list, id) in headerList" :key="id" :to="list.url">{{list.menuName}}</router-link>
       <router-link :to="'/login'" tag="li">登录</router-link>
     </ul>
   </div>
@@ -10,6 +10,7 @@
 
 <script lang="typescript">
 import Axios from "axios";
+import Cookies from 'js-cookie';
 export default {
   name: "nav-bar",
   data() {
@@ -20,7 +21,13 @@ export default {
   computed: {},
   methods: {
     getHeaderList() { 
-      Axios.get("http://192.168.0.125:8080/guest/menu/get").then(res => {
+        console.log(Cookies.get('token'));
+      Axios.get("/api/guest/menu/get", 
+    //    {headers: {
+    //   'content-type': 'application/x-www-form-urlencoded',
+    //   JSESSIONID: Cookies.get('token'), 
+    // }}
+    ).then(res => {
         this.headerList = res.data.data;
       });
     }

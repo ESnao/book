@@ -11,10 +11,14 @@ import router from './router';
 import 'swiper/css/swiper.css';
 
 
-import ElementUI from "element-ui";
+// import ElementUI from "element-ui";
+import * as Cookies from "js-cookie";
+import * as ElementUI from "element-ui";
 import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
+Vue.use(Cookies);
+
 
 // 创建Vue根实例
 new Vue({
