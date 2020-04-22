@@ -1,7 +1,7 @@
 import Router from 'vue-router';
 import Vue from 'vue';
-import Home from '../pages/Home.vue';
-import Static from '../pages/Static.vue';
+import Main from '../pages/View/index.vue';
+import Login from '../pages/Login.vue'
 Vue.use(Router);
 
 const router = new Router({
@@ -9,11 +9,11 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            component: Home
+            component: Main
         },
         {
-            path: '/Static',
-            component: Static
+            path: '/login',
+            component: Login
         }
     ]
 });

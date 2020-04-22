@@ -1,7 +1,5 @@
 <template>
- <router-view></router-view>
-    <!-- <div id="app">
-
+    <div id="app">
         <nav-bar></nav-bar>
         <div id="main">
             <router-view></router-view>
@@ -9,11 +7,11 @@
         <footer>
             版权所有 ©2020 陈曦毕业设计 版权所有
         </footer>
-    </div> -->
+    </div>
 </template>
 
 <script lang="typescript">
-// import Header from './base/Header.vue';
+import Header from '../../base/Header.vue';
 
 export default {
     name: 'app',
@@ -23,9 +21,19 @@ export default {
         }
     },
     components: {
-        // 'nav-bar': Header
+        'nav-bar': Header
     }
 }
 </script>
 
-
+<style lang="stylus">
+#app
+    width: 1180px;
+    margin: 0 auto;
+    >footer 
+        height 100px;
+        background white;
+        line-height 100px;
+        text-align center;
+        bottom 0;
+</style>

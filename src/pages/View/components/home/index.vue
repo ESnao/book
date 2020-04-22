@@ -1,20 +1,16 @@
 <template>
     <div id="home">
-        <!-- 搜索框 -->
         <div class="input-wrapper">
             <input type="text" placeholder="输入关键字">
             <button>搜索</button>
         </div>
 
-        <!-- banner轮播 -->
         <div class="banner-wrapper">
             <swiper :options="swiperOption">
                 <swiper-slide><img src="../images/a.jpg"></swiper-slide>
                 <swiper-slide><img src="../images/b.jpg"></swiper-slide>
                 <swiper-slide><img src="../images/c.jpg"></swiper-slide>
-                <!-- 分页器小圆点 -->
                 <div class="swiper-pagination" slot="pagination"></div>
-                <!-- 左右按钮 -->
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
@@ -22,14 +18,12 @@
 
         <!-- 功能区 -->
         <div class="main">
-            <!-- 导航 -->
             <div class="nav-bar">
                 <div class="service">服务</div>
                 <div class="new">最新上架</div>
             </div>
 
             <div class="content-wrapper">
-                <!-- 图标 -->
                 <div class="icons-wrapper">
                     <div>
                         <span class="icon-item">
@@ -138,12 +132,10 @@ export default {
             font-size 20px;
             .service
                 flex 6;
-                // 实现文字垂直居中
                 line-height 60px;
                 text-align center;
             .new
                 flex 4;
-                // 实现文字垂直居中
                 line-height 60px;
                 text-align center;
         .content-wrapper
