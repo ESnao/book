@@ -7,9 +7,9 @@
 
         <div class="banner-wrapper">
             <swiper :options="swiperOption">
-                <swiper-slide><img src="../../../../images/a.jpg"></swiper-slide>
-                <swiper-slide><img src="../../../../images/b.jpg"></swiper-slide>
-                <swiper-slide><img src="../../../../images/c.jpg"></swiper-slide>
+                <swiper-slide><img src="../../../../images/banner3.png"></swiper-slide>
+                <swiper-slide><img src="../../../../images/banner3.png"></swiper-slide>
+                <swiper-slide><img src="../../../../images/banner3.png"></swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-button-next" slot="button-next"></div>

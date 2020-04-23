@@ -15,9 +15,11 @@ import 'swiper/css/swiper.css';
 import * as Cookies from "js-cookie";
 import * as ElementUI from "element-ui";
 import 'element-ui/lib/theme-chalk/index.css';
+import { createAxiosPlugin } from '../base/axios/index.js';
 
 Vue.use(ElementUI);
 Vue.use(Cookies);
+Vue.use(createAxiosPlugin());
 
 
 // 创建Vue根实例

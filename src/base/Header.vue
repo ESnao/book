@@ -2,37 +2,51 @@
   <div id="nav-bar">
     <ul>
       <router-link :to="'/'" tag="li">首页</router-link>
-      <router-link  tag="li" v-for="(list, id) in headerList" :key="id" :to="list.url">{{list.menuName}}</router-link>
-      <router-link :to="'/login'" tag="li">登录</router-link>
+      <router-link
+        tag="li"
+        v-for="(list, id) in headerList"
+        :key="id"
+        :to="list.url"
+      >{{list.menuName}}</router-link>
+      <router-link :to="'/login'" tag="li" v-if="!iflog">登录</router-link>
+      <li  v-else @click='logout'>退出登录</li>
     </ul>
   </div>
 </template>
 
 <script lang="typescript">
 import Axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 export default {
   name: "nav-bar",
   data() {
     return {
-      headerList: []
+      headerList: [],
+      token: Cookies.get("token")
     };
   },
-  computed: {},
-  methods: {
-    getHeaderList() { 
-        console.log(Cookies.get('token'));
-      Axios.get("/api/guest/menu/get", 
-    //    {headers: {
-    //   'content-type': 'application/x-www-form-urlencoded',
-    //   JSESSIONID: Cookies.get('token'), 
-    // }}
-    ).then(res => {
-        this.headerList = res.data.data;
-      });
+  computed: {
+    iflog(){
+      return this.token
     }
   },
+  methods: {
+    getHeaderList() {
+      Axios.get("/api/guest/menu/get").then(res => {
+        this.headerList = res.data.data;
+      });
+    },
+    logout(){
+    Axios.post("/api/logout").then(res => {
+      Cookies.remove("token");
+      this.token='';
+      this.getHeaderList();
+      });
+    },
+    
+  },
   mounted() {
+    console.log(Cookies.get("token"))
     this.getHeaderList();
   }
 };
@@ -45,7 +59,8 @@ export default {
 
   >ul {
     list-style-type: none;
-    margin-left: 600px;
+    display :flex;
+    justify-content :flex-end;
 
     >li {
       display: inline-block;
@@ -54,5 +69,6 @@ export default {
       color: white;
     }
   }
+
 }
 </style>

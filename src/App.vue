@@ -1,19 +1,10 @@
 <template>
+<div id="app">
  <router-view></router-view>
-    <!-- <div id="app">
-
-        <nav-bar></nav-bar>
-        <div id="main">
-            <router-view></router-view>
-        </div>
-        <footer>
-            版权所有 ©2020 陈曦毕业设计 版权所有
-        </footer>
-    </div> -->
+</div>
 </template>
 
 <script lang="typescript">
-// import Header from './base/Header.vue';
 
 export default {
     name: 'app',
@@ -23,7 +14,6 @@ export default {
         }
     },
     components: {
-        // 'nav-bar': Header
     }
 }
 </script>

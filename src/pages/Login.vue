@@ -23,7 +23,7 @@
           </el-form-item>
 
           <el-form-item class="actions">
-            <el-button type="primary" native-type="submit" class="login-btn"  :loading="!allowSub">登录</el-button>
+            <el-button type="primary" native-type="submit" class="login-btn" :loading="!allowSub">登录</el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -33,39 +33,42 @@
 
 <script lang="typescript">
 import Axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 export default {
   name: "login",
   data() {
     return {
       form: {},
       allowSub: true,
-      token:''
+      token: ""
     };
   },
   methods: {
     onSubmit() {
-         this.allowSub = false;
+      this.allowSub = false;
       Axios.post("/api/login", {
         userName: this.form.username,
         password: this.form.password
-      }).then(res => {
-          this.allowSub = true;
-        this.$router.replace('/home');
-              this.$message({
-                showClose: false,
-                message:'登录成功',
-                type: 'success'
-            });
-            Cookies.set('token', res.data.data.token);
-      }).catch(res=>{
-            this.$message({
-                showClose: true,
-                message: res.msg,
-                type: 'error'
-            });
-            this.allowSub = true;
       })
+        .then(res => {
+          console.log(res.data)
+          this.$message({
+            showClose: false,
+            message: "登录成功",
+            type: "success"
+          });
+          this.allowSub = true;
+          this.$router.replace("/home");
+          Cookies.set("token", res.data.data);
+        })
+        .catch(res => {
+          this.$message({
+            showClose: true,
+            message: res.msg,
+            type: "error"
+          });
+          this.allowSub = true;
+        });
     }
   }
 };

@@ -5,11 +5,12 @@ import Home from '../pages/View/components/home/index.vue';
 import Static from '../pages/View/components/static/index.vue';
 import Borrow from '../pages/View/components/borrow/index.vue';
 import Book from '../pages/View/components/book/index.vue';
+import OverDue from '../pages/View/components/overDue/index.vue';
+import Thesis from '../pages/View/components/thesis/index.vue';
 import Login from '../pages/Login.vue'
 Vue.use(Router);
 
 const router = new Router({
-    mode: 'history',
     routes: [
         
         {
@@ -19,8 +20,10 @@ const router = new Router({
             children:[
                 { path:'/home/main',component:Home },
                 { path:'/home/static',component:Static },
-                { path:'/home/borrow',component:Borrow },
-                { path:'/home/book',component:Book },
+                { path:'/borrow',component:Borrow },
+                { path:'/book',component:Book },
+                { path:'/overDue',component:OverDue },
+                { path:'/thesis',component:Thesis },
             ]
         },
         {

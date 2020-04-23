@@ -5,7 +5,7 @@ module.exports = merge(common, {
     devServer: {
         proxy: {
             '/api': {
-                target: 'http://192.168.0.125:8080',
+                target: 'http://192.168.0.127:8080',
                 changeOrigin: true,
                 pathRewrite: {
                         '^/api': ''
