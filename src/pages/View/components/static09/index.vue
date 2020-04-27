@@ -40,30 +40,31 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-#static {
-  padding: 0 10px 10px;
+ padding: 0 10px 10px;
   box-shadow: 2px 2px 10px #b2baca;
+
   .header {
     line-height: 50px;
     position: relative;
-     padding:10px 0;
-    span{
-        position: absolute;
-        left: 0;
-        cursor pointer
+    padding:10px 0;
+    span {
+      position: absolute;
+      left: 0;
+      cursor: pointer;
     }
-    h1{
-        text-align: center;
+
+    h1 {
+      text-align: center;
     }
- 
   }
 
   .content {
     background-color: #fff;
-    padding:30px 0;
-    height 600px;
-    p{
-        padding:2px 10px;
+    padding: 30px 0;
+    height:600px;
+
+    p {
+      padding: 2px 10px;
     }
   }
 }

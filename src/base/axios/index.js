@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
     }
     if (response.data.status === 405 && response.data.msg === 'UNAUTHORIZED') {
       userInfoHelper.clear();
-      window.location.href = '/';
+      window.location.href = '/login';
       return;
     }
 

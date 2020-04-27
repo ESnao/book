@@ -135,12 +135,6 @@ export default {
           this.dialogVisible = false;
           this.$emit("refresh");
         })
-        .catch(res => {
-          this.$message({
-            message: res.data.msg,
-            type: "error"
-          });
-        });
     }
   },
   components: {

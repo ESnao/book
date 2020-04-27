@@ -7,7 +7,7 @@
           placeholder="请输入用户ID"
           clearable
           v-model="formData.author"
-          v-show="role==='admin'||role==='maneger'"
+          v-show="role==='admin'||role==='bookManger'"
         ></el-input>
         <el-input placeholder="请输入书名" clearable v-model="formData.bookName"></el-input>
         <el-input placeholder="请输入书籍编号" clearable v-model="formData.bookNumber"></el-input>
@@ -21,7 +21,7 @@
           <el-option label="已逾期" value="-2"></el-option>
         </el-select>
         <el-button type="primary" @click="search({ page: 1 })">搜索</el-button>
-        <el-button type="info" @click="toOverDue()">查看违约记录</el-button>
+        <el-button type="info" @click="toOverDue()" v-if="role==='admin'||role==='bookManger'">查看违约记录</el-button>
       </el-form>
     </div>
     <el-table :data="bookList">
@@ -56,19 +56,19 @@
             type="primary"
             @click="pass(scope.row.id)"
             size="small"
-            v-show="(role==='admin'||role==='maneger')&&(scope.row.status==0||scope.row.status=='-1')"
+            v-show="(role==='admin'||role==='bookManger')&&(scope.row.status==0||scope.row.status=='-1')"
           >批准</el-button>
           <el-button
             type="danger"
             @click="reject(scope.row.id)"
             size="small"
-            v-show="(role==='admin'||role==='maneger')&&(scope.row.status==0||scope.row.status=='-1')"
+            v-show="(role==='admin'||role==='bookManger')&&(scope.row.status==0||scope.row.status=='-1')"
           >回绝</el-button>
           <el-button
             type="danger"
             @click="comeBack(scope.row.id)"
             size="small"
-            v-show="(role==='admin'||role==='maneger')&&(scope.row.status==1||scope.row.status=='-2')"
+            v-show="(role==='admin'||role==='bookManger')&&(scope.row.status==1||scope.row.status=='-2')"
           >确认归还</el-button>
           <el-button
             type="primary"
@@ -106,7 +106,7 @@ export default {
         size: 10
       },
       totalCount: 0,
-      role: JSON.parse(Cookies.get("token")).role
+      role: Cookies.get("token")&&JSON.parse(Cookies.get("token")).role
     };
   },
   methods: {

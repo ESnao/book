@@ -15,7 +15,7 @@
           <el-option label="不可借" value="1"></el-option>
         </el-select>
         <el-button type="primary" @click="search({ page: 1 })">搜索</el-button>
-        <span v-if="role==='admin'||role==='maneger'" class="mane">
+        <span v-if="role==='admin'||role==='bookManger'" class="mane">
           <add-book @refresh="search"></add-book>
           <add-book-type @refresh="getBookType"></add-book-type>
         </span>
@@ -47,11 +47,21 @@
         </template>
       </el-table-column>
       <el-table-column prop="press" label="出版社"></el-table-column>
-      <el-table-column label="操作"  width="250">
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
-          <el-button type="primary" @click="update(scope.row)" size="small" v-show="role==='admin'||role==='maneger'">修改</el-button>
-          <el-button type="danger" @click="remove(scope.row.id)" size="small" v-show="role==='admin'||role==='maneger'">删除</el-button>
-          <el-button type="primary" @click="review(scope.row)" size="small" >查看详情</el-button>
+          <el-button
+            type="primary"
+            @click="update(scope.row)"
+            size="small"
+            v-show="role==='admin'||role==='bookManger'"
+          >修改</el-button>
+          <el-button
+            type="danger"
+            @click="remove(scope.row.id)"
+            size="small"
+            v-show="role==='admin'||role==='bookManger'"
+          >删除</el-button>
+          <el-button type="primary" @click="review(scope.row)" size="small">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -107,39 +117,43 @@
       <el-dialog :visible="reviewProject" title="查看书籍详情" width="1000px" @close="closeReviewDialog">
         <el-form :model="reviewOne" ref="form" :rules="rules" label-width="150px">
           <el-form-item label="书名：" prop="bookName">
-              <span>{{reviewOne.bookName}}</span>
+            <span>{{reviewOne.bookName}}</span>
           </el-form-item>
           <el-form-item label="作者：" prop="author">
-                       <span>{{reviewOne.author}}</span>
+            <span>{{reviewOne.author}}</span>
           </el-form-item>
           <el-form-item label="所在楼层：" prop="floor">
-               <span>{{reviewOne.floor}}</span>
+            <span>{{reviewOne.floor}}</span>
           </el-form-item>
           <el-form-item label="所在书架：" prop="bookshelf">
-               <span>{{reviewOne.bookshelf}}</span>
+            <span>{{reviewOne.bookshelf}}</span>
           </el-form-item>
           <el-form-item label="书籍编号：" prop="bookNumber">
-               <span>{{reviewOne.bookNumber}}</span>
+            <span>{{reviewOne.bookNumber}}</span>
           </el-form-item>
           <el-form-item label="出版社：" prop="press">
-               <span>{{reviewOne.press}}</span>
+            <span>{{reviewOne.press}}</span>
           </el-form-item>
           <el-form-item label="版本：" prop="edition">
-               <span>{{reviewOne.author}}</span>
+            <span>{{reviewOne.author}}</span>
           </el-form-item>
           <el-form-item label="简介：" prop="describe">
-               <span>{{reviewOne.describe}}</span>
+            <span>{{reviewOne.describe}}</span>
           </el-form-item>
           <el-form-item label="书籍类型：" prop="bookType">
-               <span>{{reviewOne.bookType}}</span>
+            <span>{{reviewOne.bookType}}</span>
           </el-form-item>
           <el-form-item label="图片：" prop="picture">
-              <img :src="reviewOne.picture">
+            <img :src="reviewOne.picture" />
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="closeReviewDialog">取消</el-button>
-            <el-button type="primary" @click="borrow(reviewOne.bookName,reviewOne.bookNumber)" v-if="role!=='guest'">申请借阅</el-button>
+          <el-button
+            type="primary"
+            @click="borrow(reviewOne.bookName,reviewOne.bookNumber)"
+            v-if="role!=='guest'"
+          >申请借阅</el-button>
         </span>
       </el-dialog>
     </div>
@@ -159,7 +173,7 @@ export default {
   data() {
     return {
       formData: {
-          status:'0'
+        status: "0"
       },
       typeList: [],
       bookList: [],
@@ -168,11 +182,11 @@ export default {
         size: 10
       },
       totalCount: 0,
-      role: JSON.parse(Cookies.get("token")).role,
+      role: Cookies.get("token")&&JSON.parse(Cookies.get("token")).role,
       editingProject: false,
-      reviewProject:false,
+      reviewProject: false,
       updateOne: {},
-      reviewOne:{},
+      reviewOne: {},
       rules: {
         bookName: {
           required: true,
@@ -244,12 +258,12 @@ export default {
     closeDialog() {
       this.editingProject = false;
     },
-    review(val){
-        this.reviewProject=true; 
-        this.reviewOne=val;
+    review(val) {
+      this.reviewProject = true;
+      this.reviewOne = val;
     },
-    closeReviewDialog(){
-        this.reviewProject=false;
+    closeReviewDialog() {
+      this.reviewProject = false;
     },
     handleSave() {
       this.$refs["form"].validate(valid => {
@@ -268,12 +282,6 @@ export default {
           this.search({ page: 1 });
           this.editingProject = false;
         })
-        .catch(res => {
-          this.$message({
-            message: res.data.msg,
-            type: "error"
-          });
-        });
     },
     remove(id) {
       this.$confirm("确定要删除此条数据吗？", "提示", {
@@ -287,29 +295,17 @@ export default {
             });
             this.search({ page: 1 });
           })
-          .catch(res => {
-            this.$message({
-              message: res.data.msg,
-              type: "error"
-            });
-          });
       });
     },
-    borrow(name,id){
-    Axios.post("/api/borrow/add", { bookName:name,bookNumber:id
-      }).then(res => {
-          console.log(res.data);
-            this.$message({
+    borrow(name, id) {
+      Axios.post("/api/borrow/add", { bookName: name, bookNumber: id })
+        .then(res => {
+          this.$message({
             message: "申请已提交！",
             type: "success"
           });
-          this.reviewProject=false;
-      }).catch(res=>{
-             this.$message({
-            message: res.data.msg,
-            type: "error"
-          });
-      })
+          this.reviewProject = false;
+        })
     }
   },
   mounted() {

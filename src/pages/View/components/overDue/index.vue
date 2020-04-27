@@ -7,7 +7,7 @@
           placeholder="请输入用户ID"
           clearable
           v-model="formData.author"
-          v-show="role==='admin'||role==='maneger'"
+          v-show="role==='admin'||role==='bookManger'"
         ></el-input>
         <el-input placeholder="请输入书名" clearable v-model="formData.bookName"></el-input>
         <el-input placeholder="请输入书籍编号" clearable v-model="formData.bookNumber"></el-input>

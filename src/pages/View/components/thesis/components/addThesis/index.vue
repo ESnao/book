@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="warning" icon="el-icon-plus" @click="dialogVisible = true">添加图书</el-button>
+    <el-button type="warning" icon="el-icon-plus" @click="dialogVisible = true">添加论文</el-button>
     <el-dialog :visible="dialogVisible" title="添加论文" width="800px" @close="closeDialog">
       <el-form :model="vals" ref="form" :rules="rules" label-width="100px">
         <el-form-item label="论文标题：" prop="thesisTitle">
@@ -26,7 +26,7 @@
 
 <script>
 import Axios from "axios";
-import Upload from "../../../../../../base/upload";
+import Upload from "../../../../../../base/uploadPdf";
 import MutipleInput from "../mutipleInput";
 import KeyMutipleInput from "../keymutipleInput";
 
@@ -82,12 +82,6 @@ export default {
           this.dialogVisible = false;
           this.$emit("refresh");
         })
-        .catch(res => {
-          this.$message({
-            message: res.data.msg,
-            type: "error"
-          });
-        });
     }
   },
   components: {

@@ -61,14 +61,6 @@ export default {
           this.$router.replace("/home");
           Cookies.set("token", res.data.data);
         })
-        .catch(res => {
-          this.$message({
-            showClose: true,
-            message: res.msg,
-            type: "error"
-          });
-          this.allowSub = true;
-        });
     }
   }
 };

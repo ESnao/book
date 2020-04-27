@@ -7,7 +7,7 @@
         <el-input placeholder="请输入作者" clearable v-model="formData.author"></el-input>
         <el-input placeholder="请输入关键词" clearable v-model="formData.thesisKeyword"></el-input>
         <el-button type="primary" @click="search({ page: 1 })">搜索</el-button>
-        <add-thesis @refresh="search"></add-thesis>
+        <add-thesis @refresh="search" v-show="role==='admin'||role==='bookManger'"></add-thesis>
       </el-form>
     </div>
     <el-table :data="bookList">
@@ -39,7 +39,7 @@
             type="danger"
             @click="remove(scope.row.id)"
             size="small"
-            v-show="role==='admin'||role==='maneger'"
+            v-show="role==='admin'||role==='bookManger'"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -58,7 +58,7 @@ import Axios from "axios";
 import Cookies from "js-cookie";
 import Upload from "../../../../base/upload/index.vue";
 import Pagination from "../../../../base/pagination/index.vue";
-import addThesis from "./components/thesis/index.vue"
+import addThesis from "./components/addThesis/index.vue"
 
 export default {
   name: "thesis",
@@ -71,7 +71,7 @@ export default {
         size: 10
       },
       totalCount: 0,
-      role: JSON.parse(Cookies.get("token")).role
+      role: Cookies.get("token")&&JSON.parse(Cookies.get("token")).role
     };
   },
   methods: {
@@ -85,6 +85,15 @@ export default {
       }).then(res => {
         this.bookList = res.data.data.content;
         this.totalCount = res.data.data.totalElements;
+      });
+    },
+    remove(rowId){
+      Axios.post("/api/thesis/delete", {id:rowId}).then(res => {
+            this.$message({
+            message: "删除成功！",
+            type: "success"
+          });
+          this.search(this.pagination);
       });
     }
   },
