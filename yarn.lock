@@ -3247,6 +3247,11 @@ mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.x:
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.25.1:
+  version "2.25.1"
+  resolved "https://registry.npm.taobao.org/moment/download/moment-2.25.1.tgz?cache=0&sync_timestamp=1588359303292&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmoment%2Fdownload%2Fmoment-2.25.1.tgz#1cb546dca1eccdd607c9324747842200b683465d"
+  integrity sha1-HLVG3KHszdYHyTJHR4QiALaDRl0=
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/move-concurrently/download/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -5088,6 +5093,11 @@ vue-awesome-swiper@^4.1.0:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/vue-awesome-swiper/download/vue-awesome-swiper-4.1.1.tgz#8f7ab221ad003021d756b86aa618f429924900fe"
   integrity sha1-j3qyIa0AMCHXVrhqphj0KZJJAP4=
+
+vue-cookies@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.npm.taobao.org/vue-cookies/download/vue-cookies-1.7.0.tgz#dd8f147ff1579e0cbd5f352dc5dff2696d8760b8"
+  integrity sha1-3Y8Uf/FXngy9XzUtxd/yaW2HYLg=
 
 vue-eslint-parser@^7.0.0:
   version "7.0.0"

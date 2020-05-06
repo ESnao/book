@@ -61,6 +61,10 @@ export default {
       dialogVisible: false,
       vals: {},
       typeList: [],
+      pages:{
+        page:1,
+        size:10
+      },
       rules: {
         bookName: {
           required: true,
@@ -133,7 +137,7 @@ export default {
             type: "success"
           });
           this.dialogVisible = false;
-          this.$emit("refresh");
+          this.$emit("refresh",this.pages);
         })
     }
   },

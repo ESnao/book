@@ -26,7 +26,7 @@
     </div>
     <el-table :data="bookList">
       <el-table-column label="创建时间">
-        <template slot-scope="scope">{{ scope.row.applyDay}}</template>
+        <template slot-scope="scope">{{ scope.row.applyDay|moment}}</template>
       </el-table-column>
       <el-table-column prop="userId" label="用户ID"></el-table-column>
       <el-table-column prop="bookName" label="书名">
@@ -45,10 +45,10 @@
         </template>
       </el-table-column>
       <el-table-column label="审核时间">
-        <template slot-scope="scope">{{ scope.row.examineDay}}</template>
+        <template slot-scope="scope">{{ scope.row.examineDay|moment}}</template>
       </el-table-column>
       <el-table-column label="结束时间">
-        <template slot-scope="scope">{{ scope.row.returnDay}}</template>
+        <template slot-scope="scope">{{ scope.row.returnDay|moment}}</template>
       </el-table-column>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
@@ -91,6 +91,7 @@
 <script lang="typescript">
 import Axios from "axios";
 import Cookies from "js-cookie";
+import moment from '../../../../base/moment/index.js';
 import Pagination from "../../../../base/pagination/index.vue";
 
 export default {

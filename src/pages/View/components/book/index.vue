@@ -16,7 +16,7 @@
         </el-select>
         <el-button type="primary" @click="search({ page: 1 })">搜索</el-button>
         <span v-if="role==='admin'||role==='bookManger'" class="mane">
-          <add-book @refresh="search"></add-book>
+          <add-book @refresh="updateList()"></add-book>
           <add-book-type @refresh="getBookType"></add-book-type>
         </span>
       </el-form>
@@ -29,8 +29,7 @@
       </el-table-column>
       <el-table-column label="创建时间">
         <template slot-scope="scope">
-          <!-- {{ scope.row.createdTime | moment }} -->
-          {{ scope.row.createdTime}}
+          {{ scope.row.createdTime | moment }}
         </template>
       </el-table-column>
       <el-table-column prop="bookName" label="书名">
@@ -163,6 +162,7 @@
 <script lang="typescript">
 import Axios from "axios";
 import Cookies from "js-cookie";
+import moment from '../../../../base/moment/index.js';
 import Upload from "../../../../base/upload/index.vue";
 import Pagination from "../../../../base/pagination/index.vue";
 import addBook from "./components/addBook/index.vue";
@@ -249,6 +249,9 @@ export default {
         this.totalCount = res.data.data.totalElements;
       });
     },
+    updateList(data = {}){
+      this.search(data);
+    },
     update(val) {
       this.editingProject = true;
       this.updateOne = {
@@ -310,7 +313,12 @@ export default {
   },
   mounted() {
     this.getBookType();
-    this.search(this.pagination);
+    if (this.$route.params.name) {
+      this.formData.bookName = this.$route.params.name;
+      this.search(this.pagination);
+    }else{
+     this.search(this.pagination);
+    }
   },
   components: {
     Pagination,

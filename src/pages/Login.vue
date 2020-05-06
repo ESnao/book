@@ -51,16 +51,15 @@ export default {
         password: this.form.password
       })
         .then(res => {
-          console.log(res.data)
           this.$message({
             showClose: false,
             message: "登录成功",
             type: "success"
           });
-          this.allowSub = true;
           this.$router.replace("/home");
           Cookies.set("token", res.data.data);
         })
+        this.allowSub = true;
     }
   }
 };

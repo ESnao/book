@@ -22,7 +22,7 @@
       </el-table-column>
       <el-table-column prop="bookNumber" label="书籍编号"></el-table-column>
       <el-table-column label="借书时间">
-        <template slot-scope="scope">{{ scope.row.examineDay}}</template>
+        <template slot-scope="scope">{{ scope.row.examineDay|moment}}</template>
       </el-table-column>
     </el-table>
     <pagination
@@ -38,6 +38,7 @@
 import Axios from "axios";
 import Cookies from "js-cookie";
 import Upload from "../../../../base/upload/index.vue";
+import moment from '../../../../base/moment/index.js';
 import Pagination from "../../../../base/pagination/index.vue";
 
 export default {

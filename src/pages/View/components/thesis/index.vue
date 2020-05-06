@@ -7,7 +7,7 @@
         <el-input placeholder="请输入作者" clearable v-model="formData.author"></el-input>
         <el-input placeholder="请输入关键词" clearable v-model="formData.thesisKeyword"></el-input>
         <el-button type="primary" @click="search({ page: 1 })">搜索</el-button>
-        <add-thesis @refresh="search" v-show="role==='admin'||role==='bookManger'"></add-thesis>
+        <add-thesis @refresh="updateList()" v-show="role==='admin'||role==='bookManger'"></add-thesis>
       </el-form>
     </div>
     <el-table :data="bookList">
@@ -58,7 +58,7 @@ import Axios from "axios";
 import Cookies from "js-cookie";
 import Upload from "../../../../base/upload/index.vue";
 import Pagination from "../../../../base/pagination/index.vue";
-import addThesis from "./components/addThesis/index.vue"
+import addThesis from "./components/addThesis/index.vue";
 
 export default {
   name: "thesis",
@@ -71,7 +71,7 @@ export default {
         size: 10
       },
       totalCount: 0,
-      role: Cookies.get("token")&&JSON.parse(Cookies.get("token")).role
+      role: Cookies.get("token") && JSON.parse(Cookies.get("token")).role
     };
   },
   methods: {
@@ -87,18 +87,26 @@ export default {
         this.totalCount = res.data.data.totalElements;
       });
     },
-    remove(rowId){
-      Axios.post("/api/thesis/delete", {id:rowId}).then(res => {
-            this.$message({
-            message: "删除成功！",
-            type: "success"
-          });
-          this.search(this.pagination);
+    updateList(data = {}) {
+      this.search(data);
+    },
+    remove(rowId) {
+      Axios.post("/api/thesis/delete", { id: rowId }).then(res => {
+        this.$message({
+          message: "删除成功！",
+          type: "success"
+        });
+        this.search(this.pagination);
       });
     }
   },
   mounted() {
-    this.search(this.pagination);
+    if (this.$route.params.name) {
+      this.formData.thesisTitle = this.$route.params.name;
+      this.search(this.pagination);
+    } else {
+      this.search(this.pagination);
+    }
   },
   components: {
     Pagination,

@@ -41,6 +41,10 @@ export default {
           required: true,
           message: "请填写"
         }
+      },
+      pages:{
+        page:1,
+        size:10
       }
     };
   },
@@ -80,7 +84,7 @@ export default {
             type: "success"
           });
           this.dialogVisible = false;
-          this.$emit("refresh");
+          this.$emit("refresh",this.pages);
         })
     }
   },

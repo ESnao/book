@@ -40,6 +40,7 @@ export default {
     Axios.post("/api/logout").then(res => {
       Cookies.remove("token");
       this.token='';
+      this.$router.replace("/home");
       this.getHeaderList();
       });
     },

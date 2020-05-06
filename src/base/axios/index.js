@@ -1,67 +1,62 @@
 import axios from 'axios';
 import { Message, Loading } from 'element-ui';
-// import userInfoHelper from 'common/userInfo';
 import qs from 'qs';
-// import * as Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 const METHODS = ['get', 'delete'];
 const BODY_METHODS = ['post', 'put', 'patch'];
 const http = {};
-const axiosInstance = axios.create({
-  headers: {
-    'content-type': 'application/json'
-  }
-});
-// const userInfoHelper = Cookie.get('token')
-let loadingInstance;
-let requestQueue = 0;
 
-axiosInstance.interceptors.request.use(function(request) {
-  if (!requestQueue) {
-    loadingInstance = Loading.service({
-      fullscreen: true,
-      background: 'rgba(0, 0, 0, .8)'
-    });
-  }
-  requestQueue++;
+axios.defaults.timeout = 2000
 
-  return request;
-});
-
-axiosInstance.interceptors.response.use(
-  function(response) {
-    requestQueue--;
-    if (!requestQueue) {
-      loadingInstance.close();
+axios.defaults.headers.post['Content-Type'] =
+  'application/x-www-form-urlencoded;charset=UTF-8'
+// 响应拦截器
+axios.interceptors.response.use(
+  response => {
+    if (response.status === 200) {
+      if ( response.data.code === -1 ) {
+        handleError(response);
+        return Promise.reject(response.data.msg);
+      } else if(response.data.code === -2){
+        Message({
+          type: 'error',
+          message:'你当前没有这个权限哦'
+        });
+        window.location.href = '/';
+      }else if(response.data.code === 405){
+        Message({
+          type: 'error',
+          message:'当前登录已失效，请重新登录'
+        });
+        window.location.href = '/#/login';
+      }
+      return Promise.resolve(response)
+ 
+    } else {
+      return Promise.reject(response)
     }
-    if (response.data.status === 405 && response.data.msg === 'UNAUTHORIZED') {
-      userInfoHelper.clear();
-      window.location.href = '/login';
-      return;
-    }
-
-    if (
-      response.status !== 200 ||
-      (response.data.status && response.data.status !== 200) ||
-      response.data.code === -1
-    ) {
-      handleError(response);
-      return Promise.reject(response.data.msg);
-    }
-
-    return response.data;
   },
-  function(error) {
-    requestQueue--;
-    if (!requestQueue) {
-      loadingInstance.close();
+   error => {
+     console.log(error.response.status)
+    if (error.response.status) {
+      switch (error.response.status) {
+        case 404:
+          router.replace({
+            path: '/login',
+            query: { redirect: router.currentRoute.fullPath }
+          })
+          break
+        default:
+            Message({
+              type: 'error',
+              message:error.response.data.msg
+            });
+      }
+      return Promise.reject(error.response)
     }
-
-    handleError(error.response);
-
-    return Promise.reject(error);
   }
-);
+)
 
 function handleError(res) {
   Message({
@@ -71,34 +66,6 @@ function handleError(res) {
       : '未知错误！'
   });
 }
-
-function request(method, url, params, headers = {}, options = {}) {
-  return axiosInstance.request({
-    method,
-    url,
-    params,
-    data: {},
-    headers: {
-      Authorization: userInfoHelper.get().accessToken,
-      ...headers
-    },
-    ...options
-  });
-}
-
-function requestWithBody(method, url, data = {}, headers = {}, options = {}) {
-  return axiosInstance.request({
-    method,
-    url,
-    data,
-    headers: {
-      Authorization: userInfoHelper.get().accessToken,
-      ...headers
-    },
-    ...options
-  });
-}
-
 function init() {
   for (let method of METHODS) {
     http[method] = ({ url, data, headers, dataType, ...options }) => {
@@ -144,7 +111,7 @@ function init() {
   return http;
 }
 
-function createPlugin() {
+function createPlugin() { 
   return {
     install: Vue => {
       Object.defineProperty(Vue.prototype, '$axios', {

@@ -1,8 +1,27 @@
 <template>
   <div id="home">
     <div class="input-wrapper">
-      <input type="text" placeholder="输入关键字" />
-      <button>搜索</button>
+      <input type="text" placeholder="输入关键字" v-model="searchName"/>
+                 <router-link
+              :to="`/book/${searchName}`"
+              class="link-button"
+            >
+              <el-button
+                type="primary"
+                size="small"
+                icon="el-icon-tickets"
+              >搜索图书</el-button>
+            </router-link>
+            <router-link
+              :to="`/thesis/${searchName}`"
+              class="link-button"
+            >
+              <el-button
+                type="success"
+                size="small"
+                icon="el-icon-tickets"
+              >搜索论文</el-button>
+            </router-link>
     </div>
 
     <div class="banner-wrapper">
@@ -123,7 +142,8 @@ export default {
         },
         autoplay: true
       },
-      bookList: []
+      bookList: [],
+      searchName:''
     };
   },
   methods: {
@@ -137,6 +157,12 @@ export default {
           });
         this.$router.replace("/login");
       }
+    },
+    findBook(){
+       this.$router.replace("/book");
+    },
+    findThesis(){
+      this.$router.replace("/thesis");
     },
       search() {
       Axios.get("/api/book/guest/search", {
