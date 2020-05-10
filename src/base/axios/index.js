@@ -24,28 +24,21 @@ axios.interceptors.response.use(
           message:'你当前没有这个权限哦'
         });
         window.location.href = '/';
-      }else if(response.data.code === 405){
-        Message({
-          type: 'error',
-          message:'当前登录已失效，请重新登录'
-        });
-        window.location.href = '/#/login';
       }
       return Promise.resolve(response)
- 
     } else {
       return Promise.reject(response)
     }
   },
    error => {
-     console.log(error.response.status)
     if (error.response.status) {
       switch (error.response.status) {
-        case 404:
-          router.replace({
-            path: '/login',
-            query: { redirect: router.currentRoute.fullPath }
-          })
+        case 405:
+          Message({
+            type: 'error',
+            message:'当前登录已失效，请重新登录'
+          });
+          window.location.href = '/#/login';
           break
         default:
             Message({

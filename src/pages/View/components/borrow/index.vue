@@ -56,7 +56,7 @@
             type="primary"
             @click="pass(scope.row.id)"
             size="small"
-            v-show="(role==='admin'||role==='bookManger')&&(scope.row.status==0||scope.row.status=='-1')"
+            v-show="(role==='admin'||role==='bookManger')&&(scope.row.status==0)"
           >批准</el-button>
           <el-button
             type="danger"
