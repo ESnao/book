@@ -27,13 +27,13 @@
     <div class="banner-wrapper">
       <swiper :options="swiperOption">
         <swiper-slide>
-          <img src="../../../../images/banner3.png" />
+          <img src="../../../../images/banner1.jpg" />
         </swiper-slide>
         <swiper-slide>
-          <img src="../../../../images/banner3.png" />
+          <img src="../../../../images/banner2.jpg" />
         </swiper-slide>
         <swiper-slide>
-          <img src="../../../../images/banner3.png" />
+          <img src="../../../../images/banner3.jpg" />
         </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -198,24 +198,19 @@ export default {
       height: 25px;
       padding:0 10px;
     }
-    >button {
-      border-radius: 4%;
-      background: #3378dd;
-      color: white;
-      width: 60px;
-      height: 25px;
-      border: none;
-      cursor: pointer;
-    }
   }
   .banner-wrapper {
-    text-align: center;
-    margin: 0 auto;
-    border: 1px solid wheat;
+        width: 100%;
+        height: 400px;
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
 
-    >img {
-      width: 100%;
-      height: 300px;
+    img {
+      width:100%;
+      min-height: 100%;
     }
   }
 
